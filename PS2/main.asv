@@ -237,7 +237,8 @@ Deltx = ri(1) - rj(1);
     Delty = Delty - L*double(int8(Delty/L));
     Deltz = Deltz - L*double(int8(Deltz/L));
     
-    dist = sqrt(Deltx^2 + Delty^2 + Deltz^2);
+    
+    dist = sqrt(Deltx^2 + Delty^2 + Deltz^2)
 
     v = 4*epsilon*( (sigma/dist)^12 - (sigma/dist)^6 );
 end
