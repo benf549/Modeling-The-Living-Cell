@@ -1,8 +1,20 @@
-
-function resi = getRes(num, frequencies)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% Benjamin Fry (bfry2)
+% 2/14/21, coded on MATLAB _R2020b_ 
+% 
 %Takes in a randomly generated number between zero and 1 and a vector of
 %frequencies. Computes the cumulative sum and steps through each index to
-%identify the residue corresponds to the random number. 
+%identify the residue corresponds to the random number.
+%
+%Inputs: random number to convert to an index and list of frequencies corresponding to amino acid
+%frequencies.
+%Output: the index corresponding to the randomly generated number. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+function resi = getRes(num, frequencies)
     resi = 1;
     for i = cumsum(frequencies)
         if num < i
