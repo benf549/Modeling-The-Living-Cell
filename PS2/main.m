@@ -8,6 +8,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% 1. Random Number Generation and Seeding
+
 rng('shuffle')
 
 %a. Adjust random normal distribution to mean of 5 and std.dev 2
@@ -33,7 +34,7 @@ binsize = edges(2) - edges(1);
 disp("Normalized Sum :")
 disp(sum(N) * binsize)
 
-%% Sampling From A Discrete Distribution
+%% 2. Sampling From A Discrete Distribution
 
 %Key
 aa_key = ['A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'I', 'L', 'K', ...
@@ -80,16 +81,18 @@ ylabel("Residue Frequncy (count/string length)")
 xlabel("Amino Acid (One Letter Code)")
 
 
-%% Part 3 - Monte Carlo Sampling of Lennard-Jones Particles.
+%% 3. Monte Carlo Sampling of Lennard-Jones Particles.
+
 %Load in Data
 load('init_crds_boxl_3.5.dat')
 
 %Initialize Variables
 L = 3.5; %Length of box
-rho_star = 0.7; %Reduced density
 epsilon = 0.25;
 sigma = 1;
-
+delta = 0.5;
+beta = 1/1;
+disp(beta)
 
 %Loop through points avoiding self and repeat interactions and sum calculated potential
 V = 0;
@@ -105,20 +108,12 @@ end
 fprintf("Lennard-Jones Potential With Periodic Boundary Conditions: %.4f\n", V)
 
 
+%Markov Chain Monte Carlo
 
+num_cycles = 1000;
+calculated_energies = MCMC(num_cycles, delta, beta, L, epsilon, sigma, init_crds_boxl_3_5);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+average_V = sum(calculated_energies)/num_cycles;
+fprintf("Calculated Average Potential Energy of: %.4f\n", average_V)
 
 

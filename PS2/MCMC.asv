@@ -1,0 +1,50 @@
+function [energy_array] = MCMC(num_cycles, delta, beta, data_matrix, )
+    temp_out = zeros(1, num_cycles)
+    
+    for i = 1:num_cycles
+    
+    %select a random particle
+    selection = randi([1,30]);
+    old = [init_crds_boxl_3_5(selection, 1) init_crds_boxl_3_5(selection, 2) init_crds_boxl_3_5(selection, 3)];
+    
+    %calculate energy of old state
+    old_energy = 0;
+    for j = 1:30
+        if j ~= selection
+            old_energy = old_energy + calc_LJ_Potential(L, epsilon, sigma, old, [init_crds_boxl_3_5(j,1) init_crds_boxl_3_5(j,2) init_crds_boxl_3_5(j,3)]);
+        end
+    end
+    
+    %Randomly independently adjust x, y, z coordinates of old
+    new = zeros(1,3);
+    new(1) = old(1) + delta*(rand()-0.5);
+    new(2) = old(2) + delta*(rand()-0.5);
+    new(3) = old(3) + delta*(rand()-0.5);
+    
+    %Calculate energy of new state
+    new_energy = 0;
+    for j = 1:30
+        if j ~= selection
+            new_energy = new_energy + calc_LJ_Potential(L, epsilon, sigma, new, [init_crds_boxl_3_5(j,1) init_crds_boxl_3_5(j,2) init_crds_boxl_3_5(j,3)]);
+        end
+    end
+    
+    %Define acceptance criterion with Boltzmann factor.
+    acc = min([1, exp(-beta * (new_energy - old_energy))]);
+    
+    %If a randomly generated number is less than the acceptance criterion, we accept the old to new transition
+    if rand() < acc
+        %Update old in data matrix with new value
+        init_crds_boxl_3_5(selection, 1) = new(1); %#ok<SAGROW>
+        init_crds_boxl_3_5(selection, 2) = new(2); %#ok<SAGROW>
+        init_crds_boxl_3_5(selection, 3) = new(3); %#ok<SAGROW>
+        
+        %Append the calculated energy of the new state to energy array for calculation of average
+        calculated_energies(i) = new_energy;
+    else
+        %If we do not accept the transition, we keep the old energy and append to energy array for average calculation
+        calculated_energies(i) = old_energy;
+    end
+end
+end
+
