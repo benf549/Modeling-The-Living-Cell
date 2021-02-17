@@ -30,9 +30,9 @@ function V = calc_LJ_Potential(L, epsilon, sigma, data_matrix)
             %Since the delta cannot exceed L, dividing the delta by L and
             %casting to int gives -1/0/1 as possible values. Then multiply by L to
             %get the component's nearest image distance on subtraction from delta.
-            Deltx = Deltx - L*double(int8(Deltx/L));
-            Delty = Delty - L*double(int8(Delty/L));
-            Deltz = Deltz - L*double(int8(Deltz/L));
+            Deltx = Deltx - L*round(Deltx/L);
+            Delty = Delty - L*round(Delty/L);
+            Deltz = Deltz - L*round(Deltz/L);
 
             %Calculate magnitude of the distance between vectors
             dist = sqrt(Deltx^2 + Delty^2 + Deltz^2);

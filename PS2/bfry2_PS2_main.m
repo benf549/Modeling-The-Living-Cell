@@ -46,14 +46,13 @@ figure(1)
 histogram(num_seq, 'Normalization', 'pdf')
 set(gca,'xtick',[1:20],'xticklabel',aa_key(1:20)');
 equal_freq_char_seq = aa_key(num_seq)
-title("Residue Frequency in Randomly Generated 300 Residue String Assuming All Have Equal Liklihood")
+title({'Residue Frequency in Randomly Generated 300 Residue'; 'String Assuming All Have Equal Liklihood'})
 xlabel("Amino Acid (One Letter Code)")
 ylabel("Residue Frequncy (count/string length)")
 
 %True Frequencies
 true_freqs = [8.25, 5.53, 4.06, 5.45, 1.37, 3.93, 6.75, 7.07, 2.27, 5.96, ...
     9.66, 5.84, 2.42, 3.86, 4.70, 6.56, 5.34, 1.08, 2.92, 6.87] ./ 100;
-sum(true_freqs);
 
 %Calculate Cumulative Sum and plot CDF
 cumul = cumsum(true_freqs);
@@ -64,6 +63,14 @@ title("Cumulative Distribution Function For Amino Acid Probabilities")
 xlabel("Amino Acid (One Letter Code)")
 ylabel("Probability")
 
+%Plot True Frequencies
+figure(3)
+bar(1:20, true_freqs);
+set(gca,'xtick',[1:20],'xticklabel',aa_key(1:20)');
+title("Exact Residue Frequencies from Expasy");
+xlabel("Amino Acid (One Letter Code)");
+ylabel("Residue Frequency")
+
 %Generate 300 random numbers and use CDF to convert to residues
 rand300 = rand(300,1);
 result = zeros(1,length(rand300));
@@ -72,11 +79,12 @@ for i = 1:length(rand300)
 end
 emperical_freq_char_seq = aa_key(result)
 
-figure(3)
+%Plot frequencies of randomly sampled residues.
+figure(4)
 histogram(result, 'Normalization', 'pdf');
 [model_freqs, edges] = histcounts(result, 'Normalization', 'pdf');
 set(gca,'xtick',1:20,'xticklabel',aa_key(1:20)');
-title("Residue Frequency in Randomly Generated 300 Residue String Using Expasy Residue Frequencies")
+title({'Residue Frequency in Randomly Generated 300 Residue'; 'String Sampled From Residue Frequency CDF'})
 ylabel("Residue Frequncy (count/string length)")
 xlabel("Amino Acid (One Letter Code)")
 
@@ -118,3 +126,41 @@ beta3 = 1/kT3;
 energies3 = MCMC(num_cycles, delta, beta3, L, epsilon, sigma, init_crds_boxl_3_5);
 average_V_3 = sum(energies3)/num_cycles;
 fprintf("Calculated Average Potential Energy w/ kT=%.2f as: %.4f\n", kT3, average_V_3)
+
+%% 4.
+% Solved in Written Answers
+%% 5.
+
+%set given parameters
+x_0 = -0.5;
+k = 4;
+m = 1;
+
+%initialize time vector, calculate x, x', and F as functions of time
+t = linspace(0, 10, 1000);
+x = (x_0 * cos( sqrt(k/m) * t)) + x_0;
+x_prime = -1 * x_0 * sin( sqrt(k/m) * t ) * sqrt(k/m);
+F = -1 * x_0 * k * cos( sqrt(k/m) * t );
+
+%plot x, x', and F
+figure(5)
+plot(t, x, 'r')
+hold on
+plot(t, x_prime, 'b')
+plot(t,  F, 'g')
+
+legend('Bond Length', "Velocity", "Force")
+xlabel('t (time units)')
+ylabel('x (units vary)')
+title("Harmonic Oscillator Representation of Bond Length as Function of Time")
+
+
+
+
+
+
+
+
+
+
+
