@@ -98,14 +98,14 @@ load('init_crds_boxl_3.5.dat')
 L = 3.5; %Length of box
 epsilon = 0.25;
 sigma = 1;
-delta = 0.5;
+delta = 0.1;
 
 %Loop through points avoiding self and repeat interactions and sum calculated potential
 V = calc_LJ_Potential(L, epsilon, sigma, init_crds_boxl_3_5);
 fprintf("Lennard-Jones Potential With Periodic Boundary Conditions: %.4f\n", V)
 
 %Markov Chain Monte Carlo
-num_cycles = 100000;
+num_cycles = 100;
 
 %Calculate with kT = 1
 kT1 = 1;
@@ -114,18 +114,18 @@ energies1 = MCMC(num_cycles, delta, beta1, L, epsilon, sigma, init_crds_boxl_3_5
 average_V_1 = sum(energies1)/num_cycles;
 fprintf("Calculated Average Potential Energy w/ kT=%.2f as: %.4f\n", kT1, average_V_1)
 
-%Calculate with kT = 0.5 and 0.1
-kT2 = 0.5;
-beta2 = 1/kT2;
-energies2 = MCMC(num_cycles, delta, beta2, L, epsilon, sigma, init_crds_boxl_3_5);
-average_V_2 = sum(energies2)/num_cycles;
-fprintf("Calculated Average Potential Energy w/ kT=%.2f as: %.4f\n", kT2, average_V_2)
-
-kT3 = 0.1;
-beta3 = 1/kT3;
-energies3 = MCMC(num_cycles, delta, beta3, L, epsilon, sigma, init_crds_boxl_3_5);
-average_V_3 = sum(energies3)/num_cycles;
-fprintf("Calculated Average Potential Energy w/ kT=%.2f as: %.4f\n", kT3, average_V_3)
+% %Calculate with kT = 0.5 and 0.1
+% kT2 = 0.5;
+% beta2 = 1/kT2;
+% energies2 = MCMC(num_cycles, delta, beta2, L, epsilon, sigma, init_crds_boxl_3_5);
+% average_V_2 = sum(energies2)/num_cycles;
+% fprintf("Calculated Average Potential Energy w/ kT=%.2f as: %.4f\n", kT2, average_V_2)
+% 
+% kT3 = 0.1;
+% beta3 = 1/kT3;
+% energies3 = MCMC(num_cycles, delta, beta3, L, epsilon, sigma, init_crds_boxl_3_5);
+% average_V_3 = sum(energies3)/num_cycles;
+% fprintf("Calculated Average Potential Energy w/ kT=%.2f as: %.4f\n", kT3, average_V_3)
 
 %% 4.
 % Solved in Written Answers
