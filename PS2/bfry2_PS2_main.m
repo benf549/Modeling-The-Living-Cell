@@ -114,18 +114,18 @@ energies1 = MCMC(num_cycles, delta, beta1, L, epsilon, sigma, init_crds_boxl_3_5
 average_V_1 = sum(energies1)/num_cycles;
 fprintf("Calculated Average Potential Energy w/ kT=%.2f as: %.4f\n", kT1, average_V_1)
 
-% %Calculate with kT = 0.5 and 0.1
-% kT2 = 0.5;
-% beta2 = 1/kT2;
-% energies2 = MCMC(num_cycles, delta, beta2, L, epsilon, sigma, init_crds_boxl_3_5);
-% average_V_2 = sum(energies2)/num_cycles;
-% fprintf("Calculated Average Potential Energy w/ kT=%.2f as: %.4f\n", kT2, average_V_2)
-% 
-% kT3 = 0.1;
-% beta3 = 1/kT3;
-% energies3 = MCMC(num_cycles, delta, beta3, L, epsilon, sigma, init_crds_boxl_3_5);
-% average_V_3 = sum(energies3)/num_cycles;
-% fprintf("Calculated Average Potential Energy w/ kT=%.2f as: %.4f\n", kT3, average_V_3)
+%Calculate with kT = 0.5 and 0.1
+kT2 = 0.5;
+beta2 = 1/kT2;
+energies2 = MCMC(num_cycles, delta, beta2, L, epsilon, sigma, init_crds_boxl_3_5);
+average_V_2 = sum(energies2)/num_cycles;
+fprintf("Calculated Average Potential Energy w/ kT=%.2f as: %.4f\n", kT2, average_V_2)
+
+kT3 = 0.1;
+beta3 = 1/kT3;
+energies3 = MCMC(num_cycles, delta, beta3, L, epsilon, sigma, init_crds_boxl_3_5);
+average_V_3 = sum(energies3)/num_cycles;
+fprintf("Calculated Average Potential Energy w/ kT=%.2f as: %.4f\n", kT3, average_V_3)
 
 %% 4.
 % Solved in Written Answers
