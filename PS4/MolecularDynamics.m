@@ -1,4 +1,31 @@
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% Benjamin Fry (bfry2)
+% 3/25/21, coded on MATLAB _R2020b_ 
+% 
+% Performs a Molecular Dynamics simulation on an array of particle
+% positions. Initializes particle velocities based on the initial
+% temperature and calculates potential energy and forces using pairwise 
+% lennard jones potential. Calculates Kinetic Energy and Temperature for
+% each step as well.
+% 
+%
+% Output is a matrix of energies, the first row of which is the potential
+% energy, the second is the kinetic energy, and the third is the
+% temperature as calculated at each step. The final positions of are also
+% output so the output is a vector consisting of two matrices
+% 
+% Input is the starting positions of the particles, the LJ sigma, LJ
+% epsilon, starting Temperature, mass of each particle, length of the box,
+% time step, and the maximum time you want to simulate out to.
+% 
+% File also contains helper functions that avoid repeat code.
+% calcualteForces loops through every element in the positions array and
+% calculates the PE and F by calling the calculateLJ function for the
+% pairwise distance.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function [energies, positions] = MolecularDynamics(positions, sigma_star, epsilon_star, T_star, mass_star, L, dt, maxtime)    
     num_loops = maxtime/dt + 1; %simulate out to 20 time units
@@ -77,6 +104,7 @@ function [potential, forces] = calculateForces(positions, sigma, epsilon, L)
 end
 
 function [PE, F] = calculateLJ(r_ij_squared, deltas, sigma, epsilon)
+    %Calculates the pairwise PE and Forces for given r^2 distance
     s12 = sigma^12;
     s6 = sigma^6;
     r12 = r_ij_squared^6;
